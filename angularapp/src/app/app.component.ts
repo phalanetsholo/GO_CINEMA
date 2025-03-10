@@ -5,11 +5,11 @@ import { MovieListComponent } from './movie-list/movie-list.component';
   standalone: true,
   imports: [MovieListComponent],
   selector: 'app-root',
-  template: 
+  template: `
     <main class="container">
       <h1>Movie App</h1>
       <app-movie-list></app-movie-list>
     </main>
-  ,
+ ` ,
 })
 export class AppComponent {}

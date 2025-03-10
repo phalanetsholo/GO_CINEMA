@@ -21,14 +21,14 @@ export class MovieService {
   // Fetch popular movies
   getPopularMovies() {
     return this.http.get<{ results: Movie[] }>(
-      ${this.baseUrl}/movie/popular?api_key=${this.apiKey}
+     ` ${this.baseUrl}/movie/popular?api_key=${this.apiKey}`
     );
   }
 
   // Search movies by keyword
   searchMovies(query: string) {
     return this.http.get<{ results: Movie[] }>(
-      ${this.baseUrl}/search/movie?api_key=${this.apiKey}&query=${query}
+     ` ${this.baseUrl}/search/movie?api_key=${this.apiKey}&query=${query}`
     );
   }
 }
