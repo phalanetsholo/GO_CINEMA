@@ -1,12 +1,52 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { MovieService, Movie } from '../services/movie.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-movie-list',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, FormsModule],
+  selector: 'app-movie-list',
   templateUrl: './movie-list.component.html',
-  styleUrl: './movie-list.component.scss'
+  styleUrls: ['./movie-list.component.css']
 })
-export class MovieListComponent {
+export class MovieListComponent implements OnInit {
+  movies: Movie[] = [];
+  searchQuery = '';
 
+  constructor(private movieService: MovieService) {}
+
+  ngOnInit() {
+    this.loadPopularMovies();
+  }
+
+  loadPopularMovies() {
+    this.movieService.getPopularMovies().subscribe({
+      next: (response) => {
+        console.log('Popular movies:', response.results);
+        this.movies = response.results;
+      },
+      error: (err) => {
+        console.error('Error loading movies:', err);
+        this.movies = [];
+      }
+    });
+  }
+
+  searchMovies() {
+    if (this.searchQuery.trim()) {
+      this.movieService.searchMovies(this.searchQuery.trim()).subscribe({
+        next: (response) => {
+          console.log('Search results:', response.results);
+          this.movies = response.results;
+        },
+        error: (err) => {
+          console.error('Search error:', err);
+          this.movies = [];
+        }
+      });
+    } else {
+      this.loadPopularMovies();
+    }
+  }
 }
